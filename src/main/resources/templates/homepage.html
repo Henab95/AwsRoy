@@ -1,0 +1,154 @@
+<!--homepage.html-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+       <meta charset="UTF-8">
+    <title>Registration and Login System</title>
+         <style type="text/css">
+         
+        *{
+    		margin: 0;
+    		padding: 0;
+			}
+		body{
+    		width: 100%;
+			}
+			
+			.heading{
+    color: rgb(237, 239, 245);
+    text-align: center;
+    font-size:250%;
+}
+.menu{
+    height: 100vh;
+    background-image: linear-gradient(rgba(4,9,30,0.7), rgba(4,9,30,0.7)), url('images/schback4.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+}
+.nav{
+    flex: 1;
+    text-align: center;
+   background-image: url(images/loginback2.png);
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+   width: 100%;
+}
+.nav ul li{
+    display: inline-block;
+    margin: 15px;
+    padding: 15px;
+    text-align: center;
+    position: relative;
+    list-style: none;
+    width: 10%;
+}
+
+.nav ul li a{
+    text-decoration: none;
+    color: #fff;
+}
+.nav ul li:hover {
+    background: #345d838a;
+    border-radius: 3px;
+}
+@media(max-width: 700px){
+    .heading{
+        font-size: 20px;
+    }
+    .nav ul li{
+        padding: 0;
+        font-size: 50%;
+    }
+    .nav ul li:hover {
+        background: #313da7;
+        border-radius: 3px;
+    }
+    .text-box h2{
+        font-size: 35px;
+    }
+    .text-box p{
+        font-size: 20px;
+    }
+}
+
+
+.text-box {
+  width: 80%;
+position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 300%;
+    color: #fff;
+    text-align: center;
+}
+.hero-btn{
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid white;
+    padding: 12px 34px;
+    font-size: 13px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+.text-box .hero-btn{
+    border: 1px solid white; 
+}
+.hero-btn:hover{
+    border: 1px solid #2c94a1;
+    background-color: #4c458a;
+    transition: 1s;
+}
+         
+         </style>
+</head>
+<body>
+
+<section class=menu>
+        <div class="heading">
+            <h1>ABRAHAM INSTITUTE</h1>
+        </div>
+        
+   <div sec:authorize="hasRole('ROLE_ANONYMOUS')">      
+        
+            <div class=nav>
+                <ul>
+                <li><a th:href="@{|/|}" th:text="'Home'">Home</a></li>
+                <li><a th:href="@{|/aboutus|}" th:text="'About Us'">About Us</a></li>
+                <li><a href="#">Tuition Fee</a></li>
+                <li><a th:href="@{|/login|}" th:text="'Log in'">Login</a></li>
+                <li><a th:href="@{|/register|}" th:text="'Register'">Register</a></li>
+                </ul>
+            </div>
+            
+            <div class="text-box">
+                <h2>Studying at Ease with impressive Efficiency</h2>
+                <p>Always better at Abraham Institue</p>
+                <a th:href="@{|/login|}" th:text="'Log in'" class="hero-btn">Click for more details</a>
+            </div>
+	
+	
+	 </div>
+	 
+	 
+  <p sec:authorize="hasRole('USER')">Text visible to user.</p>
+  <p sec:authorize="hasRole('ADMIN')">Text visible to admin.</p>
+  <p sec:authorize="isAuthenticated()">Text visible only to authenticated users.</p>
+
+
+  <div sec:authorize="isAuthenticated()">
+    <p>Logged as: <span sec:authentication="name"></span></p>
+    <p>Has role: <span sec:authentication="authorities"></span></p>
+    <p sec:authorize="hasAuthority('USER')"><a th:href="@{|/dashboard|}" th:text="'User Dashboard'"></a></p>
+    <p sec:authorize="hasAuthority('ADMIN')"><a th:href="@{|/admin/dashboard|}" th:text="'Admin Dashboard'"></a></p>
+    <a th:href="@{/logout}">Log out</a>
+  </div>
+  
+  </div>
+</body>
+</html>
